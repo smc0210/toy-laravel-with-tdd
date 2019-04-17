@@ -35,9 +35,9 @@ class ProjectsController extends Controller
             'description' => 'required'
         ]);
 
-        auth()->user()->projects()->create($attributes);
+        $project = auth()->user()->projects()->create($attributes);
 
         // redirect
-        return redirect('/projects');
+        return redirect($project->path());
     }
 }

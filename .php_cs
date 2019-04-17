@@ -4,9 +4,9 @@ use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 
 $finder = Finder::create()
-    ->notPath('bootstrap/cache')
-    ->notPath('storage')
-    ->notPath('vendor')
+    ->exclude('bootstrap/cache')
+    ->exclude('storage')
+    ->exclude('vendor')
     ->in(__DIR__)
     ->name('*.php')
     ->notName('*.blade.php')
@@ -31,6 +31,7 @@ $config = Config::create()
             'align_equals'       => true,
         ],
         'blank_line_after_opening_tag' => true,
+        'concat_space'                 => ['spacing' => 'one'],
     ])
     ->setFinder($finder)
     ->setUsingCache(false);
