@@ -10,9 +10,7 @@ class UserTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * A basic unit test example.
-     */
+    /** @test */
     public function a_user_has_projects()
     {
         $user = factory('App\User')->create();
