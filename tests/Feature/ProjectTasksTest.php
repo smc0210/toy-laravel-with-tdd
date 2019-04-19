@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Project;
 use Facades\Tests\Setup\ProjectFactory;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -65,12 +64,34 @@ class ProjectTasksTest extends TestCase
         $this->actingAs($project->owner)
             ->patch($project->tasks[0]->path(), [
                 'body'      => 'changed',
-                'completed' => true,
             ]);
 
         $this->assertDatabaseHas('tasks', [
             'body'      => 'changed',
-            'completed' => true,
+        ]);
+    }
+
+    /** @test */
+    public function a_task_can_be_marked_as_incomplete()
+    {
+        $this->withoutExceptionHandling();
+
+        $project = ProjectFactory::withTasks(1)->create();
+
+        $this->actingAs($project->owner)
+            ->patch($project->tasks[0]->path(), [
+                'body'      => 'changed',
+                'completed' => true,
+            ]);
+
+        $this->patch($project->tasks[0]->path(), [
+            'body'      => 'changed',
+            'completed' => false,
+        ]);
+
+        $this->assertDatabaseHas('tasks', [
+            'body'      => 'changed',
+            'completed' => false,
         ]);
     }
 
@@ -82,7 +103,7 @@ class ProjectTasksTest extends TestCase
         $attributes = factory('App\Task')->raw(['body' => '']);
 
         $this->actingAs($project->owner)
-             ->post($project->path() . '/tasks', $attributes)
+             ->post($project->path().'/tasks', $attributes)
              ->assertSessionHasErrors('body');
     }
 }
