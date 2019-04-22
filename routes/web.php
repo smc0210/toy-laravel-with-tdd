@@ -30,3 +30,8 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Auth::routes();
+
+Route::group(['prefix'  => '/iamport'], function () {
+    Route::get('/', 'IamportTestController@index');
+    Route::post('/billing', 'IamportTestController@store');
+});
