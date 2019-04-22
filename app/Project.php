@@ -5,8 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Project
- * @package App
+ * Class Project.
  */
 class Project extends Model
 {
@@ -14,6 +13,8 @@ class Project extends Model
      * @var array
      */
     protected $guarded = [];
+
+    public $old = [];
 
     /**
      * @return string
@@ -41,6 +42,7 @@ class Project extends Model
 
     /**
      * @param $body
+     *
      * @return Model
      */
     public function addTask($body)
@@ -53,7 +55,20 @@ class Project extends Model
      */
     public function recordActivity($description)
     {
-        $this->activity()->create(compact('description'));
+        $this->activity()->create([
+            'description'   => $description,
+            'changes'       => $this->activityChanges($description),
+        ]);
+    }
+
+    protected function activityChanges($description)
+    {
+        if ( $description == 'updated' ) {
+            return [
+                'before'    => array_except(array_diff($this->old, $this->getAttributes()), 'updated_at'),
+                'after'     => array_except($this->getChanges(), 'updated_at'),
+            ];
+        }
     }
 
     /**
