@@ -4,19 +4,20 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Class Project.
- */
 class Project extends Model
 {
+    use RecordsActivity;
+
     /**
+     * Attributes to guard against mass assignment.
+     *
      * @var array
      */
     protected $guarded = [];
 
-    public $old = [];
-
     /**
+     *  The path to the project.
+     *
      * @return string
      */
     public function path()
@@ -25,6 +26,8 @@ class Project extends Model
     }
 
     /**
+     * The owner of the project.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function owner()
@@ -33,6 +36,8 @@ class Project extends Model
     }
 
     /**
+     * The tasks associated with the project.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function tasks()
@@ -41,41 +46,13 @@ class Project extends Model
     }
 
     /**
-     * @param $body
+     * Add a task to the project.
      *
-     * @return Model
+     * @param  string $body
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function addTask($body)
     {
-        return  $this->tasks()->create(compact('body'));
-    }
-
-    /**
-     * @param $type
-     */
-    public function recordActivity($description)
-    {
-        $this->activity()->create([
-            'description'   => $description,
-            'changes'       => $this->activityChanges($description),
-        ]);
-    }
-
-    protected function activityChanges($description)
-    {
-        if ( $description == 'updated' ) {
-            return [
-                'before'    => array_except(array_diff($this->old, $this->getAttributes()), 'updated_at'),
-                'after'     => array_except($this->getChanges(), 'updated_at'),
-            ];
-        }
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function activity()
-    {
-        return $this->hasMany(Activity::class)->latest();
+        return $this->tasks()->create(compact('body'));
     }
 }
