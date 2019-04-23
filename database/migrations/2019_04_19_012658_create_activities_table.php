@@ -8,12 +8,13 @@ class CreateActivitiesTable extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
         Schema::create('activities', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->Bigincrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('project_id');
             $table->nullableMorphs('subject');
@@ -24,16 +25,15 @@ class CreateActivitiesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
         });
-        Schema::enableForeignKeyConstraints();
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down()
     {
-        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('activities');
-        Schema::enableForeignKeyConstraints();
     }
 }
