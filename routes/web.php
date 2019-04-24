@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/test', 'HomeController@test');
+
 Route::group(['middleware' => 'auth'], function () {
     // Route::get('/projects', 'ProjectsController@index');
     // Route::get('/projects/create', 'ProjectsController@create');
