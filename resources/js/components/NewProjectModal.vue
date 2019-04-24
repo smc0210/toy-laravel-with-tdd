@@ -32,23 +32,23 @@
                             class="border border-muted-light mb-2 p-2 text-xs block w-full rounded"
                             placeholder="Task 1"
                             v-for="task in form.tasks"
-                            v-model="task.value">
+                            v-model="task.body">
                     </div>
 
-                    <button class="inline-flex items-center text-xs" @click="addTask">
+                    <button type="button" class="inline-flex items-center text-xs" @click="addTask">
                         <svg class="mr-2" viewbox="0 0 18 18" height="18" width="18">
                             <g fill="#000" fill-rule="evenodd" opacity=".307">
                                 <path fill="#000" d="M14.613,10c0,0.23-0.188,0.419-0.419,0.419H10.42v3.774c0,0.23-0.189,0.42-0.42,0.42s-0.419-0.189-0.419-0.42v-3.774H5.806c-0.23,0-0.419-0.189-0.419-0.419s0.189-0.419,0.419-0.419h3.775V5.806c0-0.23,0.189-0.419,0.419-0.419s0.42,0.189,0.42,0.419v3.775h3.774C14.425,9.581,14.613,9.77,14.613,10 M17.969,10c0,4.401-3.567,7.969-7.969,7.969c-4.402,0-7.969-3.567-7.969-7.969c0-4.402,3.567-7.969,7.969-7.969C14.401,2.031,17.969,5.598,17.969,10 M17.13,10c0-3.932-3.198-7.13-7.13-7.13S2.87,6.068,2.87,10c0,3.933,3.198,7.13,7.13,7.13S17.13,13.933,17.13,10"></path>
                             </g>
                         </svg>
-                    </button>
 
-                    <span>Add New Task Field</span>
+                        <span>Add New Task Field</span>
+                    </button>
                 </div>
             </div>
 
             <footer class="flex justify-end">
-                <button class="button is-outlined mr-4" @click="$modal.hide('new-project')">Cancle</button>
+                <button type="button" class="button is-outlined mr-4" @click="$modal.hide('new-project')">Cancle</button>
                 <button class="button">Create Project</button>
             </footer>
         </form>
@@ -64,7 +64,7 @@
                     title: '',
                     description: '',
                     tasks: [
-                        { value: ''}
+                        { body: ''}
                     ]
                 },
 
