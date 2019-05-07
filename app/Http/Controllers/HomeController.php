@@ -30,7 +30,7 @@ class HomeController extends Controller
         }
 
         $query = DB::getQueryLog();
-        
+
         dd($query);
     }
 }
